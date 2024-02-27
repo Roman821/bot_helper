@@ -7,20 +7,22 @@ from dotenv import load_dotenv
 load_dotenv()
 
 endpoint = os.getenv("ENDPOINT")
+model_id = "mistralai/Mixtral-8x7B-Instruct-v0.1"
 
 logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
 )
 
+tokenizer = AutoTokenizer.from_pretrained(model_id)
+
 
 def generate_story(task):
-    system_content = ("Ты - прикольный репликон, Ты должен овтечать на все вопросы, исходя из запроса "
+    system_content = ("Ты - прикольный репликон, Ты должен отвечать на все вопросы, исходя из запроса "
                       "пользователя на русском языке")
     assistant_content = "Проложи предыдущий ответ... "
-    max_tokens = 1024
+    max_tokens = 60
 
     def count_token(text):
-        tokenizer = AutoTokenizer.from_pretrained("TheBloke/Mixtral-8x7B-Instruct-v0.1")
         return len(tokenizer.encode(text))
 
     def get_answer_from_gpt(user_promt, previous_answer=""):
@@ -60,3 +62,4 @@ def generate_story(task):
                 return None, f"Не удалось получить ответ от нейросети. Текст ошибки: {resp.text}"
 
     return get_answer_from_gpt(task)
+
