@@ -1,4 +1,4 @@
-# Название Вашего Бота
+# MuhmenovGPT
 MuhmenovHelperGPT
 @MumenovBOT
 ## Описание
